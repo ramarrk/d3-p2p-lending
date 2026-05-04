@@ -37,7 +37,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Cucumber -->
+        <!-- Cucumber --
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
