@@ -35,8 +35,6 @@ class FundingServiceTest {
     void shouldSaveFunding_whenAmountValid() {
         // ARRANGE
         Loan loan = mock(Loan.class);
-        when(loan.getId()).thenReturn("L001");
-        when(loan.isFullyFunded()).thenReturn(false);
         when(loanRepository.findById("L001")).thenReturn(Optional.of(loan));
 
         Money amount = new Money(new BigDecimal("3000000"));
