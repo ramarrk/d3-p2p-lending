@@ -19,18 +19,16 @@ public class FundingService {
     }
 
     public void fund(String loanId, String lenderId, Money amount) {
-        Loan loan = loanRepository.findById(loanId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Loan tidak ditemukan: " + loanId));
-
-        Funding funding = new Funding(
-                UUID.randomUUID().toString(),
-                loanId,
-                lenderId,
-                amount
-        );
-
+        Loan loan = findLoanOrThrow(loanId);
+        String fundingId = UUID.randomUUID().toString();
+        Funding funding = new Funding(fundingId, loanId, lenderId, amount);
         loan.addFunding(funding);
         fundingRepository.save(funding);
+    }
+
+    private Loan findLoanOrThrow(String loanId) {
+        return loanRepository.findById(loanId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Loan tidak ditemukan: " + loanId));
     }
 }
