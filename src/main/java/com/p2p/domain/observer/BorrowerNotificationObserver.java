@@ -1,3 +1,4 @@
+// Notifies borrower when their loan is fully funded
 package com.p2p.domain.observer;
 
 import com.p2p.domain.model.Loan;
