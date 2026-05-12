@@ -1,0 +1,15 @@
+Feature: Loan Lifecycle Management
+  Sebagai sistem P2P Lending
+  Saya ingin memastikan setiap pinjaman melewati tahapan status yang benar
+  Agar integritas data keuangan terjaga
+
+  Scenario: Flow pinjaman dari pengajuan hingga pendanaan
+    Given Pinjaman baru dibuat dengan status "PENDING"
+    When Admin menyetujui pinjaman (approve)
+    And Sistem membuka masa pendanaan (start funding)
+    Then Status pinjaman saat ini harus "FUNDING"
+
+  Scenario: Pencegahan pencairan dana prematur
+    Given Pinjaman dalam status "PENDING"
+    When Sistem mencoba mencairkan dana (disburse)
+    Then Sistem harus menolak transisi tersebut (InvalidStateTransition)
