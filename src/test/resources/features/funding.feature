@@ -1,29 +1,28 @@
 Feature: Loan Funding
 
-  Scenario: Lender berhasil mendanai sebagian pinjaman
-    Given terdapat pinjaman dengan target dana Rp 10000000
-    And lender memiliki saldo Rp 5000000
-    When lender mendanai pinjaman sebesar Rp 5000000
-    Then total dana terkumpul menjadi Rp 5000000
-    And status pinjaman tetap FUNDING
+  Scenario: Lender successfully funds part of a loan
+    Given a loan exists with a target amount of 10000000
+    When the lender funds the loan with 5000000
+    Then the total funded amount becomes 5000000
+    And the loan status remains FUNDING
 
-  Scenario: Funding penuh memicu notifikasi observer
-    Given terdapat pinjaman dengan target dana Rp 10000000
-    And total dana yang sudah terkumpul Rp 9000000
-    When lender mendanai pinjaman sebesar Rp 1000000
-    Then total dana terkumpul menjadi Rp 10000000
-    And semua observer mendapat notifikasi funding complete
+  Scenario: Full funding triggers observer notification
+    Given a loan exists with a target amount of 10000000
+    And the total funded amount is already 9000000
+    When the lender funds the loan with 1000000
+    Then the total funded amount becomes 10000000
+    And all observers are notified of funding completion
 
-  Scenario: Funding melebihi target ditolak
-    Given terdapat pinjaman dengan target dana Rp 10000000
-    And total dana yang sudah terkumpul Rp 9000000
-    When lender mendanai pinjaman sebesar Rp 2000000
-    Then sistem menolak dengan error "Total funding melebihi target pinjaman"
+  Scenario: Funding that exceeds target is rejected
+    Given a loan exists with a target amount of 10000000
+    And the total funded amount is already 9000000
+    When the lender funds the loan with 2000000
+    Then the system rejects with error "Total funding melebihi target pinjaman"
 
-  Scenario: Pinjaman dibatalkan saat funding 50 persen
-    Given terdapat pinjaman dengan target dana Rp 10000000
-    And total dana yang sudah terkumpul Rp 5000000
-    And terdapat 2 lender yang sudah berkontribusi
-    When borrower membatalkan pinjaman
-    Then status pinjaman menjadi CANCELLED
-    And semua lender mendapat refund proporsional
+  Scenario: Loan is cancelled when funding is 50 percent complete
+    Given a loan exists with a target amount of 10000000
+    And the total funded amount is already 5000000
+    And 2 lenders have already contributed
+    When the borrower cancels the loan
+    Then the loan status becomes CANCELLED
+    And all lenders receive a proportional refund
