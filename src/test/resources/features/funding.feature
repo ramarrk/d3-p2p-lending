@@ -1,3 +1,4 @@
+# BDD scenarios for Loan Funding domain
 Feature: Loan Funding
 
   Scenario: Lender successfully funds part of a loan
