@@ -1,3 +1,4 @@
+// Unit test for Funding domain model
 package com.p2p.domain;
 
 import com.p2p.domain.model.Funding;
