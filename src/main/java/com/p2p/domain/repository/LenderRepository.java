@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface LenderRepository {
     void save(Lender lender);
-    Lender findById(String id);
+    Optional<Lender> findById(String id);
     List<Lender> findAll();
     void delete(String id);
 }
