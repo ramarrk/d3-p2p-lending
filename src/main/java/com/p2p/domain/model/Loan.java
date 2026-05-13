@@ -11,6 +11,7 @@ import java.util.List;
 public class Loan {
     private String id;
     private LoanState state;
+    private Borrower borrower;
 
     public Loan(String id) {
         this.id = id;
@@ -23,6 +24,10 @@ public class Loan {
 
     public LoanState getState() {
         return state;
+    }
+
+    public Borrower getBorrower() {
+        return borrower;
     }
 
     public String getId() {
