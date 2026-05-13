@@ -24,13 +24,11 @@ public class InMemoryLenderRepository implements LenderRepository {
 
     @Override
     public List<Lender> findAll() {
-        // Langsung ambil semua value dari map dan masukkan ke List
         return new ArrayList<>(database.values());
     }
 
     @Override
     public void delete(String id) {
-        // Hapus berdasarkan ID saja, jangan di-clear semua!
         database.remove(id);
     }
 }
