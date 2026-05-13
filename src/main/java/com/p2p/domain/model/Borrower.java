@@ -1,10 +1,5 @@
 package com.p2p.domain.model;
 
- feature/loan-state
-public enum Borrower {
-
-}
-
 import com.p2p.domain.valueobject.Money;
 
 public class Borrower {
@@ -32,6 +27,7 @@ public class Borrower {
         if (this.activeLoanCount > 0) this.activeLoanCount--;
     }
 
+    // Getter methods
     public String getId() { return id; }
     public String getName() { return name; }
     public String getEmail() { return email; }
@@ -39,4 +35,3 @@ public class Borrower {
     public Money getBorrowingLimit() { return borrowingLimit; }
     public int getActiveLoanCount() { return activeLoanCount; }
 }
-main
