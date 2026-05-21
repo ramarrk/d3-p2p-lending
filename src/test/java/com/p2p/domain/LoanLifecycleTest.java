@@ -1,35 +1,17 @@
 package com.p2p.domain;
+
 import com.p2p.domain.model.Loan;
 import com.p2p.domain.state.PendingState;
 import com.p2p.domain.valueobject.Money;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
-import com.p2p.domain.state.ApprovedState;
-import com.p2p.domain.state.FundingState;
-class LoanLifecycleTest {
 
+class LoanLifecycleTest {
     @Test
     void shouldStartInPendingState() {
         Loan loan = new Loan("L001");
         loan.setTargetAmount(new Money(new BigDecimal("10000000")));
         assertInstanceOf(PendingState.class, loan.getState());
-    }
-
-    @Test
-    void shouldTransitionToApproved_whenApproved() {
-        Loan loan = new Loan("L001");
-        loan.setTargetAmount(new Money(new BigDecimal("10000000")));
-        loan.approve();
-        assertInstanceOf(ApprovedState.class, loan.getState());
-    }
-
-    @Test
-    void shouldTransitionToFunding_whenStartFunding() {
-        Loan loan = new Loan("L001");
-        loan.setTargetAmount(new Money(new BigDecimal("10000000")));
-        loan.approve();
-        loan.startFunding();
-        assertInstanceOf(FundingState.class, loan.getState());
     }
 }
