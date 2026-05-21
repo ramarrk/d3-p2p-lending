@@ -1,7 +1,6 @@
 package com.p2p.domain.model;
 import com.p2p.domain.state.LoanState; 
 import com.p2p.domain.state.PendingState;
-import com.p2p.domain.model.Funding;
 import com.p2p.domain.observer.FundingObserver;
 import com.p2p.domain.valueobject.Money;
 import java.math.BigDecimal;
@@ -68,5 +67,10 @@ public class Loan {
     private void notifyObservers() {
         observers.forEach(o -> o.onFundingComplete(this));
     }
+
+    public void setTargetAmount(Money targetAmount) {
+    this.targetAmount = targetAmount;
+    }
+
 }
     
