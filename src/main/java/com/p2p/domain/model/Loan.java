@@ -57,6 +57,10 @@ public class Loan {
         if (isFullyFunded()) notifyObservers();
     }
 
+    public void setTargetAmount(Money targetAmount) {
+        this.targetAmount = targetAmount;
+    }
+
     public boolean isFullyFunded() {
         return totalFunded.getAmount().compareTo(targetAmount.getAmount()) >= 0;
     }
