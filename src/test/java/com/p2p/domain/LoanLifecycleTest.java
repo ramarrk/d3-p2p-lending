@@ -5,6 +5,7 @@ import com.p2p.domain.valueobject.Money;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
+import com.p2p.domain.state.ApprovedState;
 class LoanLifecycleTest {
 
     @Test
@@ -12,5 +13,13 @@ class LoanLifecycleTest {
         Loan loan = new Loan("L001");
         loan.setTargetAmount(new Money(new BigDecimal("10000000")));
         assertInstanceOf(PendingState.class, loan.getState());
+    }
+
+    @Test
+    void shouldTransitionToApproved_whenApproved() {
+        Loan loan = new Loan("L001");
+        loan.setTargetAmount(new Money(new BigDecimal("10000000")));
+        loan.approve();
+        assertInstanceOf(ApprovedState.class, loan.getState());
     }
 }
