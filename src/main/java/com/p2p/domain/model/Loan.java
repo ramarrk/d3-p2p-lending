@@ -1,4 +1,5 @@
 package com.p2p.domain.model;
+
 import com.p2p.domain.state.*;
 import com.p2p.domain.observer.FundingObserver;
 import com.p2p.domain.valueobject.Money;
@@ -17,22 +18,49 @@ public class Loan {
 
     public Loan(String id) {
         this.id = id;
-        this.state = new PendingState();
+        this.state = new PendingState(); // Hasil TDD kita
     }
-    public String getId() { return id; }
-    public Borrower getBorrower() { return borrower; }
-    public List<Funding> getFundings() { return fundings; }
-    public Money getTargetAmount() { return targetAmount; }
-    public Money getTotalFunded() { return totalFunded; }
-    public LoanState getState() { return state; }
 
-    public void setState(LoanState state) { this.state = state; }
-    public void setTargetAmount(Money targetAmount) { this.targetAmount = targetAmount; }
-
-    public void addFunding(Funding funding) { /* abaikan isinya */ }
-    public boolean isFullyFunded() { return false; }
-    public void addObserver(FundingObserver observer) { observers.add(observer); }
     public void approve() { state.approve(this); }
     public void startFunding() { state.startFunding(this); }
     public void disburse() { state.disburse(this); }
+    
+    public void startRepayment() { state.startRepayment(this); }
+    public void cancel() { state.cancel(this); }
+    public void close() { state.close(this); }
+
+    public void addObserver(FundingObserver observer) {
+        observers.add(observer);
+    }
+
+    public void addFunding(Funding funding) {
+        if (totalFunded.add(funding.getAmount()).isGreaterThan(targetAmount)) {
+            throw new com.p2p.domain.exception.ExcessFundingException();
+        }
+        fundings.add(funding);
+        totalFunded = totalFunded.add(funding.getAmount());
+        if (isFullyFunded()) notifyObservers();
+    }
+
+    public boolean isFullyFunded() {
+        if (targetAmount == null) return false;
+        return totalFunded.getAmount().compareTo(targetAmount.getAmount()) >= 0;
+    }
+
+    public Money getTotalFunded() { return totalFunded; }
+    public Money getTargetAmount() { return targetAmount; }
+    public List<Funding> getFundings() { return fundings; }
+    public String getId() { return id; }
+    public Borrower getBorrower() { return borrower; }
+
+    public LoanState getState() { return state; }
+    public void setState(LoanState state) { this.state = state; }
+
+    public void setTargetAmount(Money targetAmount) {
+        this.targetAmount = targetAmount;
+    }
+
+    private void notifyObservers() {
+        observers.forEach(o -> o.onFundingComplete(this));
+    }
 }
