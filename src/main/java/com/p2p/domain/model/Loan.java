@@ -18,13 +18,13 @@ public class Loan {
 
     public Loan(String id) {
         this.id = id;
-        this.state = new PendingState(); // Hasil TDD kita
+        this.state = new PendingState(); 
     }
 
     public void approve() { state.approve(this); }
     public void startFunding() { state.startFunding(this); }
     public void disburse() { state.disburse(this); }
-    
+
     public void startRepayment() { state.startRepayment(this); }
     public void cancel() { state.cancel(this); }
     public void close() { state.close(this); }
