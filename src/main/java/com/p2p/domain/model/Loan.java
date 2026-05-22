@@ -34,4 +34,5 @@ public class Loan {
     public void addObserver(FundingObserver observer) { observers.add(observer); }
     public void approve() { state.approve(this); }
     public void startFunding() { state.startFunding(this); }
+    public void disburse() { state.disburse(this); }
 }
