@@ -37,4 +37,12 @@ class LoanLifecycleTest {
         loan.disburse();
         assertInstanceOf(DisbursedState.class, loan.getState());
     }
+
+    @Test
+    void shouldThrowException_whenDisburseDirectlyFromPending() {
+        Loan loan = new Loan("L001");
+        assertThrows(com.p2p.domain.exception.InvalidStateTransitionException.class, () -> {
+            loan.disburse();
+        });
+    }
 }
