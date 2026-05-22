@@ -13,4 +13,11 @@ class LoanLifecycleTest {
         Loan loan = new Loan("L001");
         assertInstanceOf(PendingState.class, loan.getState());
     }
+
+    @Test
+    void shouldTransitionToApproved_whenApproved() {
+        Loan loan = new Loan("L001");
+        loan.approve();
+        assertInstanceOf(ApprovedState.class, loan.getState());
+    }
 }
