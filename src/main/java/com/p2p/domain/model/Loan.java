@@ -33,4 +33,5 @@ public class Loan {
     public boolean isFullyFunded() { return false; }
     public void addObserver(FundingObserver observer) { observers.add(observer); }
     public void approve() { state.approve(this); }
+    public void startFunding() { state.startFunding(this); }
 }
