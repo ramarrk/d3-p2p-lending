@@ -28,4 +28,13 @@ class LoanLifecycleTest {
         loan.startFunding();
         assertInstanceOf(FundingState.class, loan.getState());
     }
+
+    @Test
+    void shouldTransitionToDisbursed_whenDisburse() {
+        Loan loan = new Loan("L001");
+        loan.approve();
+        loan.startFunding();
+        loan.disburse();
+        assertInstanceOf(DisbursedState.class, loan.getState());
+    }
 }
