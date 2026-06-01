@@ -32,6 +32,7 @@ public class Loan {
     }
     public Borrower getBorrower() { return borrower; }
     public void setBorrower(Borrower borrower) { this.borrower = borrower; }
+    public void setTargetAmount(Money targetAmount) { this.targetAmount = targetAmount; }
     private Money targetAmount;
     private Money totalFunded = new Money(BigDecimal.ZERO);
     private List<Funding> fundings = new ArrayList<>();
