@@ -10,6 +10,7 @@ import com.p2p.domain.state.FundingState;
 
 public class FundingSteps {
     private Loan loan;
+    private Exception caughtException; 
 
     @Given("a loan exists with a target amount of {int}")
     public void a_loan_exists_with_a_target_amount_of(Integer target) {
@@ -22,13 +23,8 @@ public class FundingSteps {
         loan.setTotalFundedAmount(funded);
     }
 
-@Then("all observers are notified of funding completion")
+    @Then("all observers are notified of funding completion")
     public void all_observers_are_notified_of_funding_completion() {
-        // Biarkan kosong dulu untuk fase RED
-    }
-
-    @Then("the system rejects with error {string}")
-    public void the_system_rejects_with_error(String string) {
         // Biarkan kosong dulu untuk fase RED
     }
 
@@ -39,13 +35,11 @@ public class FundingSteps {
 
     @When("the borrower cancels the loan")
     public void the_borrower_cancels_the_loan() {
-        // Panggil fungsi bisnis pembatalan di objek loan kamu
         loan.cancel(); 
     }
 
     @Then("the loan status becomes CANCELLED")
     public void the_loan_status_becomes_cancelled() {
-        // Cek apakah state object saat ini sudah berganti ke CancelledState
         String statusAktif = loan.getState().getClass().getSimpleName();
         assertEquals("CancelledState", statusAktif);
     }
@@ -57,8 +51,11 @@ public class FundingSteps {
 
     @When("the lender funds the loan with {int}")
     public void the_lender_funds_the_loan_with(Integer amount) {
-        // Panggil fungsi funding dari domain model (kolaborasi dengan teman fitur funding)
-        loan.addFunding(amount); 
+        try {
+            loan.addFunding(amount); 
+        } catch (Exception e) {
+            this.caughtException = e; 
+        }
     }
 
     @Then("the total funded amount becomes {int}")
@@ -66,9 +63,19 @@ public class FundingSteps {
         assertEquals(expectedFunded, loan.getTotalFundedAmount());
     }
 
-   @Then("the loan status remains FUNDING")
+    @Then("the loan status remains FUNDING")
     public void the_loan_status_remains_funding() {
-    String statusAktif = loan.getState().getClass().getSimpleName();
-    assertEquals("FundingState", statusAktif); 
+        String statusAktif = loan.getState().getClass().getSimpleName();
+        assertEquals("FundingState", statusAktif); 
+    }
+
+    @Then("the system rejects with error {string}")
+    public void the_system_rejects_with_error(String expectedMessage) {
+        // 1. Pastikan erornya beneran ketangkap
+        org.junit.jupiter.api.Assertions.assertNotNull(caughtException, "Harusnya sistem menolak, tapi malah lolos!");
+        
+        // 2. Samakan pesan erornya dengan tulisan dari skenario .feature
+        String actualMessage = caughtException.getMessage();
+        org.junit.jupiter.api.Assertions.assertTrue(actualMessage.contains("melebihi target"));
     }
 }
