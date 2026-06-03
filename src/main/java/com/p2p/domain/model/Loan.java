@@ -6,11 +6,32 @@ import com.p2p.domain.valueobject.Money;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import com.p2p.domain.model.Borrower;
 
 public class Loan {
     private String id;
-    private LoanState state;
     private Borrower borrower;
+    private LoanState state;
+
+    public Loan(String id) {
+        this.id = id;
+        this.state = new PendingState(); // Initial State
+    }
+
+    public void setState(LoanState state) {
+        this.state = state;
+    }
+
+    public LoanState getState() {
+        return state;
+    }
+
+    public String getId() {
+        return id;
+    }
+    public Borrower getBorrower() { return borrower; }
+    public void setBorrower(Borrower borrower) { this.borrower = borrower; }
+    public void setTargetAmount(Money targetAmount) { this.targetAmount = targetAmount; }
     private Money targetAmount;
     private Money totalFunded = new Money(BigDecimal.ZERO);
     private List<Funding> fundings = new ArrayList<>();
