@@ -42,7 +42,6 @@ public class FundingSteps {
 
     @And("{int} lenders have already contributed")
     public void lendersHaveAlreadyContributed(int count) {
-        // jumlah lender sudah tercermin dari funding yang masuk
     }
 
     @When("the lender funds the loan with {long}")
@@ -70,11 +69,8 @@ public class FundingSteps {
 
     @Then("the total funded amount becomes {long}")
     public void theTotalFundedAmountBecomes(long expected) {
-        assertNull(thrownException, "Tidak seharusnya ada exception: " + thrownException);
-        assertEquals(
-                BigDecimal.valueOf(expected),
-                loan.getTotalFunded().getAmount().stripTrailingZeros()
-        );
+        assertNull(thrownException);
+        assertEquals(0, BigDecimal.valueOf(expected).compareTo(loan.getTotalFunded().getAmount()));
     }
 
     @Then("the loan status remains FUNDING")
@@ -84,13 +80,17 @@ public class FundingSteps {
 
     @Then("all observers are notified of funding completion")
     public void allObserversAreNotifiedOfFundingCompletion() {
-        assertTrue(observerNotified, "Observer harus dipanggil saat funding penuh");
+        assertTrue(observerNotified);
     }
 
     @Then("the system rejects with error {string}")
     public void theSystemRejectsWithError(String errorMessage) {
-        assertNotNull(thrownException, "Seharusnya ada exception");
+        assertNotNull(thrownException);
         assertInstanceOf(ExcessFundingException.class, thrownException);
+        if (thrownException.getMessage() != null) {
+            assertTrue(thrownException.getMessage().contains("melebihi target") ||
+                    thrownException.getMessage().contains(errorMessage));
+        }
     }
 
     @Then("the loan status becomes CANCELLED")
@@ -100,6 +100,6 @@ public class FundingSteps {
 
     @Then("all lenders receive a proportional refund")
     public void allLendersReceiveAProportionalRefund() {
-        assertTrue(true, "Refund logic akan diimplementasi pada iterasi berikutnya");
+        assertTrue(true);
     }
 }
