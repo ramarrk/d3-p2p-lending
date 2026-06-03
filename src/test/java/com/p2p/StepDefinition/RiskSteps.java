@@ -13,8 +13,8 @@ import io.cucumber.java.en.When;
 
 import java.math.BigDecimal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class RiskSteps {
 
@@ -22,18 +22,36 @@ public class RiskSteps {
     private Money loanAmount;
     private Exception exception;
 
-    @Given("a borrower with credit score {int}, borrowing limit {int}, and {int} active loans")
-    public void aBorrowerWithCreditScoreBorrowingLimitAndActiveLoans(
-            int creditScore,
-            int borrowingLimit,
-            int activeLoans) {
-
+    @Given("a borrower with credit score {int}")
+    public void aBorrowerWithCreditScore(int creditScore) {
         borrower = new Borrower(
                 "B001",
                 "Test User",
                 "test@mail.com",
                 creditScore,
+                new Money(BigDecimal.valueOf(50000000))
+        );
+    }
+
+    @Given("a borrower with borrowing limit {int}")
+    public void aBorrowerWithBorrowingLimit(int borrowingLimit) {
+        borrower = new Borrower(
+                "B001",
+                "Test User",
+                "test@mail.com",
+                750,
                 new Money(BigDecimal.valueOf(borrowingLimit))
+        );
+    }
+
+    @Given("a borrower with {int} active loans")
+    public void aBorrowerWithActiveLoans(int activeLoans) {
+        borrower = new Borrower(
+                "B001",
+                "Test User",
+                "test@mail.com",
+                750,
+                new Money(BigDecimal.valueOf(50000000))
         );
 
         for (int i = 0; i < activeLoans; i++) {
@@ -41,11 +59,19 @@ public class RiskSteps {
         }
     }
 
-    @When("the borrower applies for a loan of {int}")
-    public void theBorrowerAppliesForALoanOf(int amount) {
-
+    @When("they apply for a loan of {int}")
+    public void theyApplyForALoanOf(int amount) {
         loanAmount = new Money(BigDecimal.valueOf(amount));
+        runRiskValidation();
+    }
 
+    @When("they apply for a new loan")
+    public void theyApplyForANewLoan() {
+        loanAmount = new Money(BigDecimal.valueOf(5000000));
+        runRiskValidation();
+    }
+
+    private void runRiskValidation() {
         RiskHandler creditHandler = new CreditScoreHandler();
         RiskHandler limitHandler = new BorrowingLimitHandler();
         RiskHandler activeLoanHandler = new ActiveLoanHandler();
@@ -60,13 +86,10 @@ public class RiskSteps {
         }
     }
 
-    @Then("the application should be approved")
-    public void theApplicationShouldBeApproved() {
-        assertNull(exception);
-    }
-
-    @Then("the application should be rejected")
-    public void theApplicationShouldBeRejected() {
+    @Then("the application should be rejected with {string}")
+    public void theApplicationShouldBeRejectedWith(String expectedException) {
         assertNotNull(exception);
+        String actualException = exception.getClass().getSimpleName();
+        assertEquals(expectedException, actualException);
     }
 }
