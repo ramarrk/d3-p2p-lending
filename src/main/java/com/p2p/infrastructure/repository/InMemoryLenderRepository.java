@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class InMemoryLenderRepository implements LenderRepository {
     private final Map<String, Lender> database = new HashMap<>();
@@ -17,8 +18,8 @@ public class InMemoryLenderRepository implements LenderRepository {
     }
 
     @Override
-    public Lender findById(String id) {
-        return database.get(id);
+    public Optional<Lender> findById(String id) {
+        return Optional.ofNullable(database.get(id));
     }
 
     @Override
