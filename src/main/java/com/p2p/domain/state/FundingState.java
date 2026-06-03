@@ -6,4 +6,9 @@ public class FundingState implements LoanState {
     public void disburse(Loan loan) {
         loan.setState(new DisbursedState());
     }
+
+    @Override
+    public void cancel(Loan loan) {
+        loan.setState(new CancelledState());
+    }
 }
