@@ -12,6 +12,10 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <sonar.exclusions>d3-p2p-lending/**</sonar.exclusions>
+        <sonar.organization>ramarrk</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectKey>ramarrk_d3-p2p-lending</sonar.projectKey>
     </properties>
 
     <dependencies>
