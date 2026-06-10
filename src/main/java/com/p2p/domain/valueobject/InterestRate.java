@@ -12,4 +12,7 @@ public class InterestRate {
         this.value = value;
     }
 
+    public BigDecimal getValue() {
+        return value;
+    }
 }
