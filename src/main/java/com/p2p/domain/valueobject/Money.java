@@ -31,4 +31,8 @@ public class Money {
     public boolean isLessThan(Money other) {
         return this.amount.compareTo(other.amount) < 0;
     }
+
+    public boolean isEqualTo(Money other) {
+        return this.amount.compareTo(other.amount) == 0;
+    }
 }
