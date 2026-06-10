@@ -11,4 +11,11 @@ public class InterestRateTest {
             new InterestRate(new BigDecimal("-0.01"));
         });
     }
+
+    @Test
+    public void testInterestRateInvalidGreaterThanOne() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new InterestRate(new BigDecimal("1.01"));
+        });
+    }
 }
