@@ -6,6 +6,9 @@ public class Money {
     private final BigDecimal amount;
 
     public Money(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Amount tidak boleh negatif");
+        }
         this.amount = amount;
     }
 }
