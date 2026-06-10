@@ -3,6 +3,8 @@ package com.p2p.domain.valueobject;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class InterestRateTest {
     @Test
@@ -27,5 +29,10 @@ public class InterestRateTest {
         assertNotNull(new InterestRate(BigDecimal.ZERO));
         assertNotNull(new InterestRate(BigDecimal.ONE));
     }
-    bash
+
+    @Test
+    public void testInterestRateToString() {
+        InterestRate rate = new InterestRate(new BigDecimal("0.15"));
+        assertEquals("15.00%", rate.toString());
+    }
 }
