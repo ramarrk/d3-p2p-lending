@@ -58,4 +58,11 @@ class MoneyTest {
         Money b = new Money(new BigDecimal("1000"));
         assertTrue(a.isLessThan(b));
     }
+
+    @Test
+    void shouldReturnTrueWhenEqual() {
+        Money a = new Money(new BigDecimal("1000"));
+        Money b = new Money(new BigDecimal("1000"));
+        assertTrue(a.isEqualTo(b));
+    }
 }
