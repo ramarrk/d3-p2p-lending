@@ -27,4 +27,12 @@ class MoneyTest {
         Money result = a.add(b);
         assertEquals(new BigDecimal("5000"), result.getAmount());
     }
+
+    @Test
+    void shouldSubtractTwoMoneyValues() {
+        Money a = new Money(new BigDecimal("5000"));
+        Money b = new Money(new BigDecimal("2000"));
+        Money result = a.subtract(b);
+        assertEquals(new BigDecimal("3000"), result.getAmount());
+    }
 }
