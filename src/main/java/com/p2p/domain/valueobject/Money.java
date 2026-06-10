@@ -23,4 +23,8 @@ public class Money {
     public Money subtract(Money other) {
         return new Money(this.amount.subtract(other.amount));
     }
+
+    public boolean isGreaterThan(Money other) {
+        return this.amount.compareTo(other.amount) > 0;
+    }
 }
