@@ -35,4 +35,9 @@ public class Money {
     public boolean isEqualTo(Money other) {
         return this.amount.compareTo(other.amount) == 0;
     }
+
+    @Override
+    public String toString() {
+        return "Rp " + amount;
+    }
 }
