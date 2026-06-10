@@ -19,4 +19,8 @@ public class Money {
     public Money add(Money other) {
         return new Money(this.amount.add(other.amount));
     }
+
+    public Money subtract(Money other) {
+        return new Money(this.amount.subtract(other.amount));
+    }
 }
