@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class MoneyTest {
 
@@ -49,5 +50,12 @@ class MoneyTest {
         Money a = new Money(new BigDecimal("3000"));
         Money b = new Money(new BigDecimal("5000"));
         assertFalse(a.isGreaterThan(b));
+    }
+
+    @Test
+    void shouldReturnTrueWhenLessThan() {
+        Money a = new Money(new BigDecimal("500"));
+        Money b = new Money(new BigDecimal("1000"));
+        assertTrue(a.isLessThan(b));
     }
 }
