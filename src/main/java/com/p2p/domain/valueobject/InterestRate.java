@@ -6,8 +6,9 @@ public class InterestRate {
     private final BigDecimal value;
 
     public InterestRate(BigDecimal value) {
-        if (value.compareTo(BigDecimal.ZERO) < 0)
-            throw new IllegalArgumentException("Rate tidak boleh kurang dari 0");
+        if (value.compareTo(BigDecimal.ZERO) < 0 ||
+                value.compareTo(BigDecimal.ONE) > 0)
+            throw new IllegalArgumentException("Rate harus antara 0 dan 1");
         this.value = value;
     }
 
