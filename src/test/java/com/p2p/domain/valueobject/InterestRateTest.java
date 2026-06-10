@@ -18,4 +18,14 @@ public class InterestRateTest {
             new InterestRate(new BigDecimal("1.01"));
         });
     }
+
+    @Test
+    public void testInterestRateValidAndBoundary() {
+        BigDecimal validVal = new BigDecimal("0.15");
+        InterestRate rate = new InterestRate(validVal);
+        assertEquals(validVal, rate.getValue());
+        assertNotNull(new InterestRate(BigDecimal.ZERO));
+        assertNotNull(new InterestRate(BigDecimal.ONE));
+    }
+    bash
 }
