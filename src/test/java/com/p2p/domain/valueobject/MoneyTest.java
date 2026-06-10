@@ -35,4 +35,11 @@ class MoneyTest {
         Money result = a.subtract(b);
         assertEquals(new BigDecimal("3000"), result.getAmount());
     }
+
+    @Test
+    void shouldReturnTrueWhenAmountIsGreaterThan() {
+        Money a = new Money(new BigDecimal("5000"));
+        Money b = new Money(new BigDecimal("3000"));
+        assertTrue(a.isGreaterThan(b));
+    }
 }
