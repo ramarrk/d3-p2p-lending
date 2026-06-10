@@ -43,4 +43,11 @@ class MoneyTest {
         Money b = new Money(new BigDecimal("3000"));
         assertTrue(a.isGreaterThan(b));
     }
+
+    @Test
+    void shouldReturnFalseWhenAmountIsNotGreaterThan() {
+        Money a = new Money(new BigDecimal("3000"));
+        Money b = new Money(new BigDecimal("5000"));
+        assertFalse(a.isGreaterThan(b));
+    }
 }
