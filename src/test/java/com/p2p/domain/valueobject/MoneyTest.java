@@ -19,4 +19,12 @@ class MoneyTest {
         Money money = new Money(new BigDecimal("5000"));
         assertEquals(new BigDecimal("5000"), money.getAmount());
     }
+
+    @Test
+    void shouldAddTwoMoneyValues() {
+        Money a = new Money(new BigDecimal("3000"));
+        Money b = new Money(new BigDecimal("2000"));
+        Money result = a.add(b);
+        assertEquals(new BigDecimal("5000"), result.getAmount());
+    }
 }
