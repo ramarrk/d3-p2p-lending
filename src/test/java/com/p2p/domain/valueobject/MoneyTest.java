@@ -65,4 +65,10 @@ class MoneyTest {
         Money b = new Money(new BigDecimal("1000"));
         assertTrue(a.isEqualTo(b));
     }
+
+    @Test
+    void shouldReturnFormattedString() {
+        Money money = new Money(new BigDecimal("1000"));
+        assertEquals("Rp 1000", money.toString());
+    }
 }
