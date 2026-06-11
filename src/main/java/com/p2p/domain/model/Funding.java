@@ -1,4 +1,3 @@
-// Domain model representing a lender's contribution to a loan
 package com.p2p.domain.model;
 
 import com.p2p.domain.valueobject.Money;
