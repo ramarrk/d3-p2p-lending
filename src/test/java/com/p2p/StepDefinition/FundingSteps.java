@@ -82,4 +82,9 @@ public class FundingSteps {
             thrownException = e;
         }
     }
+
+    @Then("the loan status becomes CANCELLED")
+    public void theLoanStatusBecomesCancelled() {
+        assertInstanceOf(com.p2p.domain.state.CancelledState.class, loan.getState());
+    }
 }
