@@ -5,6 +5,7 @@ import com.p2p.domain.valueobject.Money;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
+import com.p2p.domain.model.Loan;
 
 public class FundingTest {
 
@@ -26,5 +27,20 @@ public class FundingTest {
                 new Funding("F001", "L001", "LN001",
                         new Money(new BigDecimal("-1000")))
         );
+    }
+
+    @Test
+    void shouldAddFundingToLoan() {
+        Loan loan = new Loan("L001");
+        loan.approve();
+        loan.startFunding();
+        loan.setTargetAmount(new Money(new BigDecimal("10000000")));
+
+        Funding funding = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
+        loan.addFunding(funding);
+
+        assertEquals(new BigDecimal("5000000"),
+                loan.getTotalFunded().getAmount().stripTrailingZeros());
     }
 }
