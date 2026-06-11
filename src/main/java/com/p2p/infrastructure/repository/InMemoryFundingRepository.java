@@ -2,7 +2,6 @@ package com.p2p.infrastructure.repository;
 
 import com.p2p.domain.model.Funding;
 import com.p2p.domain.repository.FundingRepository;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,28 +12,14 @@ public class InMemoryFundingRepository implements FundingRepository {
     private final Map<String, Funding> store = new HashMap<>();
 
     @Override
-    public void save(Funding funding) {
-        store.put(funding.getId(), funding);
-    }
+    public void save(Funding funding) {}
 
     @Override
-    public Optional<Funding> findById(String id) {
-        return Optional.ofNullable(store.get(id));
-    }
+    public Optional<Funding> findById(String id) { return Optional.empty(); }
 
     @Override
-    public List<Funding> findByLoanId(String loanId) {
-        List<Funding> result = new ArrayList<>();
-        for (Funding funding : store.values()) {
-            if (funding.getLoanId().equals(loanId)) {
-                result.add(funding);
-            }
-        }
-        return result;
-    }
+    public List<Funding> findByLoanId(String loanId) { return new ArrayList<>(); }
 
     @Override
-    public void delete(String id) {
-        store.remove(id);
-    }
+    public void delete(String id) {}
 }
