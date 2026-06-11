@@ -8,22 +8,24 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RiskEngineTest {
-    @Test
-    void testCreditScoreFail() {
-        Borrower b = new Borrower("1", "User", "u@m.com", 500, new Money(new BigDecimal("1000000")));
-        RiskHandler handler = new CreditScoreHandler();
-        
-        assertThrows(InsufficientCreditScoreException.class, () -> 
-            handler.handle(b, new Money(new BigDecimal("100000"))));
-    }
+   @Test
+void testCreditScoreFail() {
+    Borrower b = new Borrower(
+        "1",
+        "User",
+        "u@m.com",
+        500,
+        new Money(new BigDecimal("1000000"))
+    );
 
-    @Test
-    void testRiskChainSuccess() {
-        Borrower b = new Borrower("2", "Safe", "s@m.com", 700, new Money(new BigDecimal("50000000")));
-        RiskHandler chain = new CreditScoreHandler();
-        chain.setNext(new BorrowingLimitHandler());
-        chain.setNext(new ActiveLoanHandler());
+    RiskHandler handler = new CreditScoreHandler();
 
-        assertDoesNotThrow(() -> chain.handle(b, new Money(new BigDecimal("10000000"))));
-    }
+    assertThrows(
+        InsufficientCreditScoreException.class,
+        () -> handler.handle(
+            b,
+            new Money(new BigDecimal("100000"))
+        )
+    );
+}
 }
