@@ -62,4 +62,15 @@ public class InMemoryFundingRepositoryTest {
 
         assertFalse(repository.findById("F001").isPresent());
     }
+
+    @Test
+    void shouldReturnEmptyWhenNoFundingMatchLoanId() {
+        Funding funding = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
+        repository.save(funding);
+
+        List<Funding> result = repository.findByLoanId("L999");
+
+        assertTrue(result.isEmpty());
+    }
 }

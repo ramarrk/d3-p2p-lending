@@ -71,4 +71,18 @@ class MoneyTest {
         Money money = new Money(new BigDecimal("1000"));
         assertEquals("Rp 1000", money.toString());
     }
+
+    @Test
+    void shouldReturnFalseWhenNotLessThan() {
+        Money a = new Money(new BigDecimal("1000"));
+        Money b = new Money(new BigDecimal("500"));
+        assertFalse(a.isLessThan(b));
+    }
+
+    @Test
+    void shouldReturnFalseWhenNotEqual() {
+        Money a = new Money(new BigDecimal("1000"));
+        Money b = new Money(new BigDecimal("500"));
+        assertFalse(a.isEqualTo(b));
+    }
 }
