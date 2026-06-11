@@ -15,7 +15,7 @@ public class Funding {
         this.loanId = loanId;
         this.lenderId = lenderId;
         this.amount = amount;
-        this.fundedAt = LocalDateTime.now();
+        this.fundedAt = LocalDateTime.now(java.time.ZoneId.systemDefault());
     }
 
     public String getId() { return id; }
