@@ -40,7 +40,9 @@ public class FundingTest {
                 new Money(new BigDecimal("5000000")));
         loan.addFunding(funding);
 
-        assertEquals(new BigDecimal("5000000"),
-                loan.getTotalFunded().getAmount().stripTrailingZeros());
+        assertEquals(
+                new BigDecimal("5000000").stripTrailingZeros(),
+                loan.getTotalFunded().getAmount().stripTrailingZeros()
+        );
     }
 }
