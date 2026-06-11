@@ -25,6 +25,7 @@ public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     private static final String DUE_PREFIX = "Due: ";
+    private static final String AMOUNT_PREFIX = " | Amount: ";
     public static void main(String[] args) {
         logger.info("=== P2P Lending Platform Simulation ===");
 
@@ -84,21 +85,21 @@ public class Main {
         );
         List<Repayment> fixedSchedule = fixedStrategy.calculate(loan.getId(), principal, tenor);
         fixedSchedule.forEach(r ->
-                logger.info(DUE_PREFIX + r.getDueDate() + " | Amount: " + r.getAmount())
+                logger.info(DUE_PREFIX + r.getDueDate() + AMOUNT_PREFIX + r.getAmount())
         );
 
         logger.info("=== Repayment Schedule (Floating Rate 10%) ===");
         FloatingRateStrategy floatingStrategy = new FloatingRateStrategy(new BigDecimal("0.10"));
         List<Repayment> floatingSchedule = floatingStrategy.calculate(loan.getId(), principal, tenor);
         floatingSchedule.forEach(r ->
-                logger.info(DUE_PREFIX + r.getDueDate() + " | Amount: " + r.getAmount())
+                logger.info(DUE_PREFIX + r.getDueDate() + AMOUNT_PREFIX + r.getAmount())
         );
 
         logger.info("=== Repayment Schedule (Murabahah) ===");
         MurabahahStrategy murabahahStrategy = new MurabahahStrategy(new Money(new BigDecimal("2000000")));
         List<Repayment> murabahahSchedule = murabahahStrategy.calculate(loan.getId(), principal, tenor);
         murabahahSchedule.forEach(r ->
-                logger.info(DUE_PREFIX + r.getDueDate() + " | Amount: " + r.getAmount())
+                logger.info(DUE_PREFIX + r.getDueDate() + AMOUNT_PREFIX + r.getAmount())
         );
 
         logger.info("=== Late Payment Simulation ===");
