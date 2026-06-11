@@ -22,7 +22,9 @@ public class InMemoryLenderRepository implements LenderRepository {
     }
 
     @Override
-    public List<Lender> findAll() { return new ArrayList<>(); }
+    public List<Lender> findAll() {
+        return new ArrayList<>(database.values());
+    }
 
     @Override
     public void delete(String id) {}
