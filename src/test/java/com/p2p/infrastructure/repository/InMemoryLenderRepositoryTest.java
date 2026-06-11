@@ -39,4 +39,15 @@ public class InMemoryLenderRepositoryTest {
 
         assertEquals(2, result.size());
     }
+
+    @Test
+    void shouldDeleteLender() {
+        Lender lender = new Lender("LN001", "John", "john@mail.com",
+                new Money(new BigDecimal("10000000")));
+        repository.save(lender);
+
+        repository.delete("LN001");
+
+        assertFalse(repository.findById("LN001").isPresent());
+    }
 }
