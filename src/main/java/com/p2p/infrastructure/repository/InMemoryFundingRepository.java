@@ -12,10 +12,14 @@ public class InMemoryFundingRepository implements FundingRepository {
     private final Map<String, Funding> store = new HashMap<>();
 
     @Override
-    public void save(Funding funding) {}
+    public void save(Funding funding) {
+        store.put(funding.getId(), funding);
+    }
 
     @Override
-    public Optional<Funding> findById(String id) { return Optional.empty(); }
+    public Optional<Funding> findById(String id) {
+        return Optional.ofNullable(store.get(id));
+    }
 
     @Override
     public List<Funding> findByLoanId(String loanId) { return new ArrayList<>(); }
