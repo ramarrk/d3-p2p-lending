@@ -90,6 +90,7 @@ public class FundingSteps {
 
     @And("{int} lenders have already contributed")
     public void lendersHaveAlreadyContributed(int count) {
+        // Number of lenders is already reflected from previously added fundings
     }
 
     @Then("all lenders receive a proportional refund")
