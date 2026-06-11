@@ -27,6 +27,7 @@ public class Borrower {
         if (this.activeLoanCount > 0) this.activeLoanCount--;
     }
 
+    // Getter methods
     public String getId() { return id; }
     public String getName() { return name; }
     public String getEmail() { return email; }
