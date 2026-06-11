@@ -16,4 +16,14 @@ public class InMemoryLenderRepositoryTest {
     void setUp() {
         repository = new InMemoryLenderRepository();
     }
+
+    @Test
+    void shouldSaveLender() {
+        Lender lender = new Lender("LN001", "John", "john@mail.com",
+                new Money(new BigDecimal("10000000")));
+        repository.save(lender);
+
+        assertTrue(repository.findById("LN001").isPresent());
+    }
+    
 }
