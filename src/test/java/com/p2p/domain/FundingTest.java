@@ -12,4 +12,10 @@ public class FundingTest {
         Funding funding = new Funding("F001");
         assertEquals("F001", funding.getId());
     }
+
+    @Test
+    void shouldReturnCorrectLoanId() {
+        Funding funding = new Funding("F001", "L001");
+        assertEquals("L001", funding.getLoanId());
+    }
 }
