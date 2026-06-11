@@ -1,4 +1,5 @@
 package com.p2p.domain.state;
+
 import com.p2p.domain.model.Loan;
 
 public class FundingState implements LoanState {

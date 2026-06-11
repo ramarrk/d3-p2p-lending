@@ -19,32 +19,28 @@ public class FloatingRateStrategy implements RepaymentCalculationStrategy {
 
     @Override
     public List<Repayment> calculate(String loanId, Money principal, int tenorMonths) {
-        // Rate pasar bisa berubah tiap bulan, tapi untuk generate jadwal awal
-        // kita pakai rate saat ini sebagai estimasi
-        BigDecimal pokok = principal.getAmount();
-        BigDecimal cicilanPokok = pokok.divide(
-            BigDecimal.valueOf(tenorMonths), 2, RoundingMode.HALF_UP
-        );
-
         List<Repayment> jadwal = new ArrayList<>();
         LocalDate dueDate = LocalDate.now();
-        BigDecimal sisaPokok = pokok;
 
         for (int i = 1; i <= tenorMonths; i++) {
             dueDate = dueDate.plusMonths(1);
-            BigDecimal bunga = sisaPokok.multiply(marketRate)
-                    .divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
-            BigDecimal cicilan = cicilanPokok.add(bunga);
-            sisaPokok = sisaPokok.subtract(cicilanPokok);
 
-            jadwal.add(new Repayment(
-                UUID.randomUUID().toString(),
-                loanId,
-                dueDate,
-                new Money(cicilan)
-            ));
+//        BigDecimal pokok = principal.getAmount();
+//        BigDecimal cicilanPokok = pokok.divide(
+//            BigDecimal.valueOf(tenorMonths), 2, RoundingMode.HALF_UP
+//        );
+//        BigDecimal bunga = sisaPokok.multiply(marketRate)
+//                .divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
+//        BigDecimal cicilan = cicilanPokok.add(bunga);
+//        sisaPokok = sisaPokok.subtract(cicilanPokok);
+//        jadwal.add(new Repayment(
+//            UUID.randomUUID().toString(),
+//            loanId,
+//            dueDate,
+//            new Money(cicilan)
+//        ));
         }
 
         return jadwal;
     }
-}
+    }

@@ -2,7 +2,6 @@ package com.p2p.infrastructure.repository;
 
 import com.p2p.domain.model.Funding;
 import com.p2p.domain.repository.FundingRepository;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

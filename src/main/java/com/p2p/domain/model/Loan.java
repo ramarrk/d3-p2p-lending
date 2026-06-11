@@ -51,39 +51,13 @@ public class Loan {
         observers.forEach(o -> o.onFundingComplete(this));
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public Borrower getBorrower() {
-        return borrower;
-    }
-
-    public void setBorrower(Borrower borrower) {
-        this.borrower = borrower;
-    }
-
-    public LoanState getState() {
-        return state;
-    }
-
-    public void setState(LoanState state) {
-        this.state = state;
-    }
-
-    public Money getTargetAmount() {
-        return targetAmount;
-    }
-
-    public void setTargetAmount(Money targetAmount) {
-        this.targetAmount = targetAmount;
-    }
-
-    public Money getTotalFunded() {
-        return totalFunded;
-    }
-
-    public List<Funding> getFundings() {
-        return fundings;
-    }
+    public String getId() { return id; }
+    public Borrower getBorrower() { return borrower; }
+    public void setBorrower(Borrower borrower) { this.borrower = borrower; }
+    public LoanState getState() { return state; }
+    public void setState(LoanState state) { this.state = state; }
+    public void setTargetAmount(Money targetAmount) { this.targetAmount = targetAmount; }
+    public Money getTotalFunded() { return totalFunded; }
+    public Money getTargetAmount() { return targetAmount; }
+    public List<Funding> getFundings() { return fundings; }
 }
