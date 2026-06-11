@@ -67,4 +67,10 @@ public class FundingSteps {
     public void allObserversAreNotifiedOfFundingCompletion() {
         assertTrue(observerNotified, "Observer harus dipanggil saat funding penuh");
     }
+
+    @Then("the system rejects with error {string}")
+    public void theSystemRejectsWithError(String errorMessage) {
+        assertNotNull(thrownException, "Seharusnya ada exception");
+        assertInstanceOf(com.p2p.domain.exception.ExcessFundingException.class, thrownException);
+    }
 }
