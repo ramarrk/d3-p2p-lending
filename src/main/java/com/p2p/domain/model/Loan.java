@@ -34,12 +34,11 @@ public class Loan {
     }
 
     public void addFunding(Funding funding) {
-//        if (totalFunded.add(funding.getAmount()).isGreaterThan(targetAmount)) {
-//            throw new com.p2p.domain.exception.ExcessFundingException();
-//        }
+        if (totalFunded.add(funding.getAmount()).isGreaterThan(targetAmount)) {
+            throw new com.p2p.domain.exception.ExcessFundingException();
+        }
         fundings.add(funding);
         totalFunded = totalFunded.add(funding.getAmount());
-//        if (isFullyFunded()) notifyObservers();
     }
 
     public boolean isFullyFunded() {
