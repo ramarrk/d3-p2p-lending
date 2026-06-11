@@ -7,4 +7,9 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FundingTest {
+    @Test
+    void shouldReturnCorrectId() {
+        Funding funding = new Funding("F001");
+        assertEquals("F001", funding.getId());
+    }
 }
