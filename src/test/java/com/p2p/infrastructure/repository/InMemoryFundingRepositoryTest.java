@@ -51,4 +51,15 @@ public class InMemoryFundingRepositoryTest {
 
         assertEquals(2, result.size());
     }
+
+    @Test
+    void shouldDeleteFunding() {
+        Funding funding = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
+        repository.save(funding);
+
+        repository.delete("F001");
+
+        assertFalse(repository.findById("F001").isPresent());
+    }
 }
