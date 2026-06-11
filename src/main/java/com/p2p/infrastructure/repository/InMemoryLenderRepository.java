@@ -12,10 +12,14 @@ public class InMemoryLenderRepository implements LenderRepository {
     private final Map<String, Lender> database = new HashMap<>();
 
     @Override
-    public void save(Lender lender) {}
+    public void save(Lender lender) {
+        database.put(lender.getId(), lender);
+    }
 
     @Override
-    public Optional<Lender> findById(String id) { return Optional.empty(); }
+    public Optional<Lender> findById(String id) {
+        return Optional.ofNullable(database.get(id));
+    }
 
     @Override
     public List<Lender> findAll() { return new ArrayList<>(); }
