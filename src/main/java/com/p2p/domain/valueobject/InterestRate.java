@@ -1,6 +1,7 @@
 package com.p2p.domain.valueobject;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class InterestRate {
     private final BigDecimal value;
@@ -18,6 +19,8 @@ public class InterestRate {
 
     @Override
     public String toString() {
-        return value.multiply(BigDecimal.valueOf(100)).toPlainString() + "%";
+        return value.multiply(BigDecimal.valueOf(100))
+                .setScale(2, RoundingMode.HALF_UP)
+                .toPlainString() + "%";
     }
 }

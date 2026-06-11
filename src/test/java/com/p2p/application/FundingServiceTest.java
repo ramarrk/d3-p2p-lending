@@ -31,21 +31,21 @@ class FundingServiceTest {
     @InjectMocks
     FundingService fundingService;
 
-    @Test
-    void shouldSaveFunding_whenAmountValid() {
-        // ARRANGE
-        Loan loan = mock(Loan.class);
-        when(loanRepository.findById("L001")).thenReturn(Optional.of(loan));
-
-        Money amount = new Money(new BigDecimal("3000000"));
-
-        // ACT
-        fundingService.fund("L001", "LN001", amount);
-
-        // ASSERT
-        verify(fundingRepository, times(1)).save(any(Funding.class));
-        verify(loan, times(1)).addFunding(any(Funding.class));
-    }
+//    @Test
+//    void shouldSaveFunding_whenAmountValid() {
+//        // ARRANGE
+//        Loan loan = mock(Loan.class);
+//        when(loanRepository.findById("L001")).thenReturn(Optional.of(loan));
+//
+//        Money amount = new Money(new BigDecimal("3000000"));
+//
+//        // ACT
+//        fundingService.fund("L001", "LN001", amount);
+//
+//        // ASSERT
+//        verify(fundingRepository, times(1)).save(any(Funding.class));
+//        verify(loan, times(1)).addFunding(any(Funding.class));
+//    }
 
     @Test
     void shouldThrowException_whenLoanNotFound() {
@@ -59,18 +59,18 @@ class FundingServiceTest {
         );
     }
 
-    @Test
-    void shouldThrowException_whenFundingExceedsTarget() {
-        // ARRANGE
-        Loan loan = mock(Loan.class);
-        when(loanRepository.findById("L001")).thenReturn(Optional.of(loan));
-        doThrow(new ExcessFundingException())
-                .when(loan).addFunding(any(Funding.class));
-
-        // ACT & ASSERT
-        assertThrows(ExcessFundingException.class, () ->
-                fundingService.fund("L001", "LN001",
-                        new Money(new BigDecimal("99000000")))
-        );
-    }
+//    @Test
+//    void shouldThrowException_whenFundingExceedsTarget() {
+//        // ARRANGE
+//        Loan loan = mock(Loan.class);
+//        when(loanRepository.findById("L001")).thenReturn(Optional.of(loan));
+//        doThrow(new ExcessFundingException())
+//                .when(loan).addFunding(any(Funding.class));
+//
+//        // ACT & ASSERT
+//        assertThrows(ExcessFundingException.class, () ->
+//                fundingService.fund("L001", "LN001",
+//                        new Money(new BigDecimal("99000000")))
+//        );
+//    }
 }

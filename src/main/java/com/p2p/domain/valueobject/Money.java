@@ -6,9 +6,14 @@ public class Money {
     private final BigDecimal amount;
 
     public Money(BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) < 0)
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Amount tidak boleh negatif");
+        }
         this.amount = amount;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     public Money add(Money other) {
@@ -31,12 +36,8 @@ public class Money {
         return this.amount.compareTo(other.amount) == 0;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
     @Override
     public String toString() {
-        return "Rp " + amount.toPlainString();
+        return "Rp " + amount;
     }
 }
