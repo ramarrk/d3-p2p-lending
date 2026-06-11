@@ -16,6 +16,6 @@ public class InMemoryLoanRepository implements LoanRepository {
         return store.values().stream()
                 .filter(loan -> loan.getBorrower() != null
                         && borrowerId.equals(loan.getBorrower().getId()))
-                .collect(Collectors.toList());
+                .toList();
     }
 }
