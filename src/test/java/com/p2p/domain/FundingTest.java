@@ -45,4 +45,19 @@ public class FundingTest {
                 loan.getTotalFunded().getAmount().stripTrailingZeros()
         );
     }
+
+    @Test
+    void shouldThrowExceptionWhenFundingExceedsTarget() {
+        Loan loan = new Loan("L001");
+        loan.approve();
+        loan.startFunding();
+        loan.setTargetAmount(new Money(new BigDecimal("10000000")));
+        loan.addFunding(new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("9000000"))));
+
+        assertThrows(com.p2p.domain.exception.ExcessFundingException.class, () ->
+                loan.addFunding(new Funding("F002", "L001", "LN002",
+                        new Money(new BigDecimal("2000000"))))
+        );
+    }
 }
