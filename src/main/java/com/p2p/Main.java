@@ -1,7 +1,6 @@
 package com.p2p;
 
 import com.p2p.domain.model.Borrower;
-import com.p2p.domain.model.Funding;
 import com.p2p.domain.model.Loan;
 import com.p2p.domain.model.Repayment;
 import com.p2p.domain.observer.BorrowerNotificationObserver;
@@ -20,12 +19,14 @@ import com.p2p.domain.valueobject.Money;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("=== P2P Lending Platform Simulation ===\n");
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
 
-        // Setup Borrower
+    public static void main(String[] args) {
+        logger.info("=== P2P Lending Platform Simulation ===");
+
         Borrower borrower = new Borrower(
                 "B001",
                 "Andi Pratama",
@@ -33,75 +34,47 @@ public class Main {
                 750,
                 new Money(new BigDecimal("50000000"))
         );
-        System.out.println("Borrower created: " + borrower.getName());
-        System.out.println("Credit Score: " + borrower.getCreditScore());
-        System.out.println("Borrowing Limit: " + borrower.getBorrowingLimit());
+        logger.info("Borrower created: " + borrower.getName());
+        logger.info("Credit Score: " + borrower.getCreditScore());
+        logger.info("Borrowing Limit: " + borrower.getBorrowingLimit());
 
-        // Setup Loan
         Loan loan = new Loan("L001");
-        System.out.println("\nLoan created with ID: " + loan.getId());
-        System.out.println("Loan status: " + loan.getState().getClass().getSimpleName());
+        logger.info("Loan created with ID: " + loan.getId());
+        logger.info("Loan status: " + loan.getState().getClass().getSimpleName());
 
-        // Register Observers
-//        loan.addObserver(new LenderNotificationObserver());
+        loan.addObserver(new LenderNotificationObserver());
         loan.addObserver(new BorrowerNotificationObserver());
         loan.addObserver(new DisbursementObserver());
-        System.out.println("Observers registered.");
+        logger.info("Observers registered.");
 
-        // Risk Engine Check
-        System.out.println("\n=== Risk Engine Check ===");
+        logger.info("=== Risk Engine Check ===");
         RiskHandler chain = new CreditScoreHandler();
         chain.setNext(new BorrowingLimitHandler());
         chain.setNext(new ActiveLoanHandler());
 
         try {
             chain.handle(borrower, new Money(new BigDecimal("10000000")));
-            System.out.println("Risk check passed!");
-
-            // Approve Loan
+            logger.info("Risk check passed!");
             loan.approve();
-            System.out.println("Loan approved. Status: " + loan.getState().getClass().getSimpleName());
-
-            // Start Funding
+            logger.info("Loan approved. Status: " + loan.getState().getClass().getSimpleName());
             loan.startFunding();
-            System.out.println("Funding started. Status: " + loan.getState().getClass().getSimpleName());
-
+            logger.info("Funding started. Status: " + loan.getState().getClass().getSimpleName());
         } catch (Exception e) {
-            System.out.println("Risk check failed: " + e.getMessage());
+            logger.info("Risk check failed: " + e.getMessage());
             loan.reject();
-            System.out.println("Loan rejected. Status: " + loan.getState().getClass().getSimpleName());
+            logger.info("Loan rejected. Status: " + loan.getState().getClass().getSimpleName());
             return;
         }
 
-        // Simulate Funding
-        System.out.println("\n=== Funding Process ===");
-
-//        Money funding1Amount = new Money(new BigDecimal("6000000"));
-//        Funding funding1 = new Funding("F001", loan.getId(), "LN001", funding1Amount);
-//        loan.addFunding(funding1);
-//        System.out.println("Lender 1 funded: " + funding1Amount);
-//        System.out.println("Total funded: " + loan.getTotalFunded());
-//        System.out.println("Fully funded: " + loan.isFullyFunded());
-//
-//        Money funding2Amount = new Money(new BigDecimal("4000000"));
-//        Funding funding2 = new Funding("F002", loan.getId(), "LN002", funding2Amount);
-//        loan.addFunding(funding2);
-//        System.out.println("Lender 2 funded: " + funding2Amount);
-//        System.out.println("Total funded: " + loan.getTotalFunded());
-//        System.out.println("Fully funded: " + loan.isFullyFunded());
-
-        // Disburse
-        System.out.println("\n=== Disbursement ===");
+        logger.info("=== Disbursement ===");
         loan.disburse();
-        System.out.println("Loan disbursed. Status: " + loan.getState().getClass().getSimpleName());
+        logger.info("Loan disbursed. Status: " + loan.getState().getClass().getSimpleName());
 
-        // Start Repayment
-        System.out.println("\n=== Repayment ===");
+        logger.info("=== Repayment ===");
         loan.startRepayment();
-        System.out.println("Repayment started. Status: " + loan.getState().getClass().getSimpleName());
+        logger.info("Repayment started. Status: " + loan.getState().getClass().getSimpleName());
 
-        // Repayment Schedule - Fixed Rate
-        System.out.println("\n=== Repayment Schedule (Fixed Rate 12%) ===");
+        logger.info("=== Repayment Schedule (Fixed Rate 12%) ===");
         Money principal = new Money(new BigDecimal("10000000"));
         int tenor = 12;
 
@@ -110,44 +83,36 @@ public class Main {
         );
         List<Repayment> fixedSchedule = fixedStrategy.calculate(loan.getId(), principal, tenor);
         fixedSchedule.forEach(r ->
-                System.out.println("Due: " + r.getDueDate() + " | Amount: " + r.getAmount())
+                logger.info("Due: " + r.getDueDate() + " | Amount: " + r.getAmount())
         );
 
-        // Repayment Schedule - Floating Rate
-        System.out.println("\n=== Repayment Schedule (Floating Rate 10%) ===");
-        FloatingRateStrategy floatingStrategy = new FloatingRateStrategy(
-                new BigDecimal("0.10")
-        );
+        logger.info("=== Repayment Schedule (Floating Rate 10%) ===");
+        FloatingRateStrategy floatingStrategy = new FloatingRateStrategy(new BigDecimal("0.10"));
         List<Repayment> floatingSchedule = floatingStrategy.calculate(loan.getId(), principal, tenor);
         floatingSchedule.forEach(r ->
-                System.out.println("Due: " + r.getDueDate() + " | Amount: " + r.getAmount())
+                logger.info("Due: " + r.getDueDate() + " | Amount: " + r.getAmount())
         );
 
-        // Repayment Schedule - Murabahah
-        System.out.println("\n=== Repayment Schedule (Murabahah) ===");
-        MurabahahStrategy murabahahStrategy = new MurabahahStrategy(
-                new Money(new BigDecimal("2000000"))
-        );
+        logger.info("=== Repayment Schedule (Murabahah) ===");
+        MurabahahStrategy murabahahStrategy = new MurabahahStrategy(new Money(new BigDecimal("2000000")));
         List<Repayment> murabahahSchedule = murabahahStrategy.calculate(loan.getId(), principal, tenor);
         murabahahSchedule.forEach(r ->
-                System.out.println("Due: " + r.getDueDate() + " | Amount: " + r.getAmount())
+                logger.info("Due: " + r.getDueDate() + " | Amount: " + r.getAmount())
         );
 
-        // Simulate Late Payment Penalty
-        System.out.println("\n=== Late Payment Simulation ===");
+        logger.info("=== Late Payment Simulation ===");
         Repayment firstRepayment = fixedSchedule.get(0);
         LocalDate latePaymentDate = firstRepayment.getDueDate().plusDays(5);
         firstRepayment.calculatePenalty(latePaymentDate);
-        System.out.println("Due date: " + firstRepayment.getDueDate());
-        System.out.println("Payment date: " + latePaymentDate);
-        System.out.println("Penalty (5 days late): " + firstRepayment.getPenalty());
-        System.out.println("Status: " + firstRepayment.getStatus());
+        logger.info("Due date: " + firstRepayment.getDueDate());
+        logger.info("Payment date: " + latePaymentDate);
+        logger.info("Penalty (5 days late): " + firstRepayment.getPenalty());
+        logger.info("Status: " + firstRepayment.getStatus());
 
-        // Close Loan
-        System.out.println("\n=== Close Loan ===");
+        logger.info("=== Close Loan ===");
         loan.close();
-        System.out.println("Loan closed. Status: " + loan.getState().getClass().getSimpleName());
+        logger.info("Loan closed. Status: " + loan.getState().getClass().getSimpleName());
 
-        System.out.println("\n=== Simulation Complete ===");
+        logger.info("=== Simulation Complete ===");
     }
 }
