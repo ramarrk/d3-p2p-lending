@@ -45,4 +45,25 @@ class LoanLifecycleTest {
             loan.disburse();
         });
     }
+
+    @Test
+void shouldTransitionToRejected_whenRejectedFromPending() {
+    Loan loan = new Loan("L001");
+    loan.reject();
+    assertInstanceOf(RejectedState.class, loan.getState());
+}
+
+@Test
+void shouldThrowException_whenApprovingRejectedLoan() {
+    Loan loan = new Loan("L001");
+    loan.reject();
+    assertThrows(InvalidStateTransitionException.class, () -> loan.approve());
+}
+
+@Test
+void shouldThrowException_whenStartFundingFromRejected() {
+    Loan loan = new Loan("L001");
+    loan.reject();
+    assertThrows(InvalidStateTransitionException.class, () -> loan.startFunding());
+}
 }
