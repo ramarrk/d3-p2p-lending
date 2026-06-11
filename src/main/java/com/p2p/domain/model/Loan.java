@@ -22,12 +22,12 @@ public class Loan {
     }
 
     public void approve() { state.approve(this); }
+    public void reject() { state.reject(this); }
     public void startFunding() { state.startFunding(this); }
     public void disburse() { state.disburse(this); }
     public void startRepayment() { state.startRepayment(this); }
     public void cancel() { state.cancel(this); }
     public void close() { state.close(this); }
-    public void reject() { state.reject(this); }
 
     public void addObserver(FundingObserver observer) {
         observers.add(observer);
