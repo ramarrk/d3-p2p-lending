@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FundingTest {
     @Test
     void shouldReturnCorrectId() {
-        Funding funding = new Funding("F001");
+        Funding funding = new Funding("F001", "L001");
         assertEquals("F001", funding.getId());
     }
 
@@ -17,5 +17,11 @@ public class FundingTest {
     void shouldReturnCorrectLoanId() {
         Funding funding = new Funding("F001", "L001");
         assertEquals("L001", funding.getLoanId());
+    }
+
+    @Test
+    void shouldReturnCorrectLenderId() {
+        Funding funding = new Funding("F001", "L001", "LN001");
+        assertEquals("LN001", funding.getLenderId());
     }
 }
