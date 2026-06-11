@@ -37,8 +37,8 @@ public class Loan {
 //        if (totalFunded.add(funding.getAmount()).isGreaterThan(targetAmount)) {
 //            throw new com.p2p.domain.exception.ExcessFundingException();
 //        }
-//        fundings.add(funding);
-//        totalFunded = totalFunded.add(funding.getAmount());
+        fundings.add(funding);
+        totalFunded = totalFunded.add(funding.getAmount());
 //        if (isFullyFunded()) notifyObservers();
     }
 
