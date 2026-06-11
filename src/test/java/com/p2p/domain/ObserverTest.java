@@ -62,4 +62,17 @@ class ObserverTest {
         assertTrue(output.contains("Andi"), "Notifikasi harus menyebut nama borrower: Andi");
         assertTrue(output.contains("L001"), "Notifikasi harus menyebut loan ID: L001");
     }
+
+    @Test
+    void disbursementObserver_shouldPrintNotification_whenFundingComplete() {
+        Loan loan = mock(Loan.class);
+        when(loan.getId()).thenReturn("L001");
+        DisbursementObserver observer = new DisbursementObserver();
+
+        observer.onFundingComplete(loan);
+
+        String output = outputCaptor.toString();
+        assertTrue(output.contains("L001"), "Log disbursement harus menyebut loan ID: L001");
+        assertFalse(output.isEmpty(), "Observer harus menghasilkan output");
+    }
 }
