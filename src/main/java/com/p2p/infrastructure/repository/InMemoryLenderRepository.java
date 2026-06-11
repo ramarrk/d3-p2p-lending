@@ -2,7 +2,6 @@ package com.p2p.infrastructure.repository;
 
 import com.p2p.domain.model.Lender;
 import com.p2p.domain.repository.LenderRepository;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,22 +12,14 @@ public class InMemoryLenderRepository implements LenderRepository {
     private final Map<String, Lender> database = new HashMap<>();
 
     @Override
-    public void save(Lender lender) {
-        database.put(lender.getId(), lender);
-    }
+    public void save(Lender lender) {}
 
     @Override
-    public Optional<Lender> findById(String id) {
-        return Optional.ofNullable(database.get(id));
-    }
+    public Optional<Lender> findById(String id) { return Optional.empty(); }
 
     @Override
-    public List<Lender> findAll() {
-        return new ArrayList<>(database.values());
-    }
+    public List<Lender> findAll() { return new ArrayList<>(); }
 
     @Override
-    public void delete(String id) {
-        database.remove(id);
-    }
+    public void delete(String id) {}
 }
