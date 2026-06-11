@@ -22,7 +22,15 @@ public class InMemoryFundingRepository implements FundingRepository {
     }
 
     @Override
-    public List<Funding> findByLoanId(String loanId) { return new ArrayList<>(); }
+    public List<Funding> findByLoanId(String loanId) {
+        List<Funding> result = new ArrayList<>();
+        for (Funding funding : store.values()) {
+            if (funding.getLoanId().equals(loanId)) {
+                result.add(funding);
+            }
+        }
+        return result;
+    }
 
     @Override
     public void delete(String id) {}
