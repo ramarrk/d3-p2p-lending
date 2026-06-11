@@ -1,27 +1,4 @@
-// Domain model representing a lender's contribution to a loan
 package com.p2p.domain.model;
 
-import com.p2p.domain.valueobject.Money;
-import java.time.LocalDateTime;
-
 public class Funding {
-    private final String id;
-    private final String loanId;
-    private final String lenderId;
-    private final Money amount;
-    private final LocalDateTime fundedAt;
-
-    public Funding(String id, String loanId, String lenderId, Money amount) {
-        this.id = id;
-        this.loanId = loanId;
-        this.lenderId = lenderId;
-        this.amount = amount;
-        this.fundedAt = LocalDateTime.now();
-    }
-
-    public String getId() { return id; }
-    public String getLoanId() { return loanId; }
-    public String getLenderId() { return lenderId; }
-    public Money getAmount() { return amount; }
-    public LocalDateTime getFundedAt() { return fundedAt; }
 }
