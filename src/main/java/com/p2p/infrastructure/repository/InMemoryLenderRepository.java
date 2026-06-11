@@ -2,7 +2,6 @@ package com.p2p.infrastructure.repository;
 
 import com.p2p.domain.model.Lender;
 import com.p2p.domain.repository.LenderRepository;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
