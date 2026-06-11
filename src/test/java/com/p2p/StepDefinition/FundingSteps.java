@@ -24,4 +24,14 @@ public class FundingSteps {
         loan.setTargetAmount(new Money(BigDecimal.valueOf(targetAmount)));
         loan.addObserver(fundingLoan -> observerNotified = true);
     }
+
+    @And("the total funded amount is already {long}")
+    public void theTotalFundedAmountIsAlready(long alreadyFunded) {
+        loan.addFunding(new Funding(
+                UUID.randomUUID().toString(),
+                loan.getId(),
+                "LN-EXISTING",
+                new Money(BigDecimal.valueOf(alreadyFunded))
+        ));
+    }
 }
