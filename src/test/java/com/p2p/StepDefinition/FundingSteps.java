@@ -48,4 +48,13 @@ public class FundingSteps {
             thrownException = e;
         }
     }
+
+    @Then("the total funded amount becomes {long}")
+    public void theTotalFundedAmountBecomes(long expected) {
+        assertNull(thrownException, "Tidak seharusnya ada exception: " + thrownException);
+        assertEquals(
+                BigDecimal.valueOf(expected).stripTrailingZeros(),
+                loan.getTotalFunded().getAmount().stripTrailingZeros()
+        );
+    }
 }
