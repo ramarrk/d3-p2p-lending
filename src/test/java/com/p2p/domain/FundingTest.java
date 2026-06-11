@@ -76,4 +76,18 @@ public class FundingTest {
 
         assertTrue(notified[0]);
     }
+
+    @Test
+    void shouldCancelLoanWhenFundingInProgress() {
+        Loan loan = new Loan("L001");
+        loan.approve();
+        loan.startFunding();
+        loan.setTargetAmount(new Money(new BigDecimal("10000000")));
+        loan.addFunding(new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000"))));
+
+        loan.cancel();
+
+        assertInstanceOf(com.p2p.domain.state.CancelledState.class, loan.getState());
+    }
 }
