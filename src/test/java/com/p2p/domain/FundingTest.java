@@ -70,4 +70,20 @@ public class FundingTest {
                         new Money(new BigDecimal("2000000"))))
         );
     }
+
+    @Test
+    void shouldNotifyObserversWhenFullyFunded() {
+        Loan loan = new Loan("L001");
+        loan.approve();
+        loan.startFunding();
+        loan.setTargetAmount(new Money(new BigDecimal("10000000")));
+
+        boolean[] notified = {false};
+        loan.addObserver(l -> notified[0] = true);
+
+        loan.addFunding(new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("10000000"))));
+
+        assertTrue(notified[0]);
+    }
 }
