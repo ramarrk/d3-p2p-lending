@@ -19,4 +19,12 @@ public class FundingTest {
         assertEquals(amount.getAmount(), funding.getAmount().getAmount());
         assertNotNull(funding.getFundedAt());
     }
+
+    @Test
+    void shouldNotAllowNegativeFundingAmount() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new Funding("F001", "L001", "LN001",
+                        new Money(new BigDecimal("-1000")))
+        );
+    }
 }
