@@ -73,4 +73,13 @@ public class FundingSteps {
         assertNotNull(thrownException, "Seharusnya ada exception");
         assertInstanceOf(com.p2p.domain.exception.ExcessFundingException.class, thrownException);
     }
+
+    @When("the borrower cancels the loan")
+    public void theBorrowerCancelsTheLoan() {
+        try {
+            loan.cancel();
+        } catch (Exception e) {
+            thrownException = e;
+        }
+    }
 }
