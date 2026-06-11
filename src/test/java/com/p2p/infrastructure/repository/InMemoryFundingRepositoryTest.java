@@ -5,8 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryFundingRepositoryTest {
     private InMemoryFundingRepository repository;
@@ -21,8 +22,18 @@ public class InMemoryFundingRepositoryTest {
         Funding funding = new Funding("F001", "L001", "LN001",
                 new Money(new BigDecimal("5000000")));
 
+        assertDoesNotThrow(() -> repository.save(funding));
+    }
+
+    @Test
+    void shouldFindFundingById() {
+        Funding funding = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
         repository.save(funding);
 
-        assertTrue(repository.findById("F001").isPresent());
+        Optional<Funding> result = repository.findById("F001");
+
+        assertTrue(result.isPresent());
+        assertEquals("F001", result.get().getId());
     }
 }
