@@ -87,4 +87,9 @@ public class FundingSteps {
     public void theLoanStatusBecomesCancelled() {
         assertInstanceOf(com.p2p.domain.state.CancelledState.class, loan.getState());
     }
+
+    @And("{int} lenders have already contributed")
+    public void lendersHaveAlreadyContributed(int count) {
+    }
+
 }
