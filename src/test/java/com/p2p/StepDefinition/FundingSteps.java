@@ -15,4 +15,13 @@ public class FundingSteps {
     private Loan loan;
     private Exception thrownException;
     private boolean observerNotified = false;
+
+    @Given("a loan exists with a target amount of {long}")
+    public void aLoanExistsWithATargetAmountOf(long targetAmount) {
+        loan = new Loan("L001");
+        loan.approve();
+        loan.startFunding();
+        loan.setTargetAmount(new Money(BigDecimal.valueOf(targetAmount)));
+        loan.addObserver(fundingLoan -> observerNotified = true);
+    }
 }
