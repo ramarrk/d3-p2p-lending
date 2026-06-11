@@ -57,4 +57,9 @@ public class FundingSteps {
                 loan.getTotalFunded().getAmount().stripTrailingZeros()
         );
     }
+
+    @Then("the loan status remains FUNDING")
+    public void theLoanStatusRemainsFunding() {
+        assertInstanceOf(com.p2p.domain.state.FundingState.class, loan.getState());
+    }
 }
