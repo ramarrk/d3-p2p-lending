@@ -39,6 +39,7 @@ public class Loan {
         }
         fundings.add(funding);
         totalFunded = totalFunded.add(funding.getAmount());
+        if (isFullyFunded()) notifyObservers();
     }
 
     public boolean isFullyFunded() {
