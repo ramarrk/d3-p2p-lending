@@ -33,5 +33,7 @@ public class InMemoryFundingRepository implements FundingRepository {
     }
 
     @Override
-    public void delete(String id) {}
+    public void delete(String id) {
+        store.remove(id);
+    }
 }
