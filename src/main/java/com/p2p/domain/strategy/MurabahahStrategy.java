@@ -28,15 +28,15 @@ public class MurabahahStrategy implements RepaymentCalculationStrategy {
         List<Repayment> jadwal = new ArrayList<>();
         LocalDate dueDate = LocalDate.now(ZoneId.systemDefault());
 
-        for (int i = 1; i <= tenorMonths; i++) {
-            dueDate = dueDate.plusMonths(1);
-            jadwal.add(new Repayment(
-                UUID.randomUUID().toString(),
-                loanId,
-                dueDate,
-                new Money(cicilanPerBulan)
-            ));
-        }
+//        for (int i = 1; i <= tenorMonths; i++) {
+//            dueDate = dueDate.plusMonths(1);
+//            jadwal.add(new Repayment(
+//                UUID.randomUUID().toString(),
+//                loanId,
+//                dueDate,
+//                new Money(cicilanPerBulan)
+//            ));
+//        }
 
         return jadwal;
     }

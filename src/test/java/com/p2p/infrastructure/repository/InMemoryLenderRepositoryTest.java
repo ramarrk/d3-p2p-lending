@@ -1,49 +1,53 @@
 package com.p2p.infrastructure.repository;
 
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import com.p2p.domain.model.Lender;
+import com.p2p.domain.valueobject.Money;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryLenderRepositoryTest {
+    private InMemoryLenderRepository repository;
 
-    @Test
-    public void testSaveAndFindById() {
-        InMemoryLenderRepository repository = new InMemoryLenderRepository();
-        Lender mockLender = Mockito.mock(Lender.class);
-        Mockito.when(mockLender.getId()).thenReturn("LENDER-777");
-
-        repository.save(mockLender);
-        Optional<Lender> result = repository.findById("LENDER-777");
-
-        assertTrue(result.isPresent());
-        assertEquals(mockLender, result.get());
+    @BeforeEach
+    void setUp() {
+        repository = new InMemoryLenderRepository();
     }
 
     @Test
-    public void testFindAll() {
-        InMemoryLenderRepository repository = new InMemoryLenderRepository();
-        Lender mockLender = Mockito.mock(Lender.class);
-        Mockito.when(mockLender.getId()).thenReturn("LEN");
+    void shouldSaveLender() {
+        Lender lender = new Lender("LN001", "John", "john@mail.com",
+                new Money(new BigDecimal("10000000")));
+        repository.save(lender);
 
-        repository.save(mockLender);
+        assertTrue(repository.findById("LN001").isPresent());
+    }
+
+    @Test
+    void shouldFindAllLenders() {
+        Lender lender1 = new Lender("LN001", "John", "john@mail.com",
+                new Money(new BigDecimal("10000000")));
+        Lender lender2 = new Lender("LN002", "Jane", "jane@mail.com",
+                new Money(new BigDecimal("5000000")));
+        repository.save(lender1);
+        repository.save(lender2);
+
         List<Lender> result = repository.findAll();
 
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
     }
 
     @Test
-    public void testDelete() {
-        InMemoryLenderRepository repository = new InMemoryLenderRepository();
-        Lender mockLender = Mockito.mock(Lender.class);
-        Mockito.when(mockLender.getId()).thenReturn("LEN-DEL");
+    void shouldDeleteLender() {
+        Lender lender = new Lender("LN001", "John", "john@mail.com",
+                new Money(new BigDecimal("10000000")));
+        repository.save(lender);
 
-        repository.save(mockLender);
-        repository.delete("LEN-DEL");
-        Optional<Lender> result = repository.findById("LEN-DEL");
+        repository.delete("LN001");
 
-        assertFalse(result.isPresent());
+        assertFalse(repository.findById("LN001").isPresent());
     }
 }

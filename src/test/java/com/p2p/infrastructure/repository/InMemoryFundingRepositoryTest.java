@@ -1,64 +1,76 @@
 package com.p2p.infrastructure.repository;
-
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import com.p2p.domain.model.Funding;
+import com.p2p.domain.valueobject.Money;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryFundingRepositoryTest {
+    private InMemoryFundingRepository repository;
+
+    @BeforeEach
+    void setUp() {
+        repository = new InMemoryFundingRepository();
+    }
 
     @Test
-    public void testSaveAndFindById() {
-        InMemoryFundingRepository repository = new InMemoryFundingRepository();
-        Funding mockFunding = Mockito.mock(Funding.class);
-        Mockito.when(mockFunding.getId()).thenReturn("FUND-001");
+    void shouldSaveFunding() {
+        Funding funding = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
 
-        repository.save(mockFunding);
-        Optional<Funding> result = repository.findById("FUND-001");
+        assertDoesNotThrow(() -> repository.save(funding));
+    }
+
+    @Test
+    void shouldFindFundingById() {
+        Funding funding = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
+        repository.save(funding);
+
+        Optional<Funding> result = repository.findById("F001");
 
         assertTrue(result.isPresent());
-        assertEquals(mockFunding, result.get());
+        assertEquals("F001", result.get().getId());
     }
 
     @Test
-    public void testFindByLoanIdSuccess() {
-        InMemoryFundingRepository repository = new InMemoryFundingRepository();
-        Funding mockFunding = Mockito.mock(Funding.class);
-        Mockito.when(mockFunding.getId()).thenReturn("F1");
-        Mockito.when(mockFunding.getLoanId()).thenReturn("LOAN-ABC");
+    void shouldFindFundingByLoanId() {
+        Funding funding1 = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
+        Funding funding2 = new Funding("F002", "L001", "LN002",
+                new Money(new BigDecimal("3000000")));
+        repository.save(funding1);
+        repository.save(funding2);
 
-        repository.save(mockFunding);
-        List<Funding> result = repository.findByLoanId("LOAN-ABC");
+        List<Funding> result = repository.findByLoanId("L001");
 
-        assertEquals(1, result.size());
-        assertEquals(mockFunding, result.get(0));
+        assertEquals(2, result.size());
     }
 
     @Test
-    public void testFindByLoanIdNotFound() {
-        InMemoryFundingRepository repository = new InMemoryFundingRepository();
-        Funding mockFundingWithDifferentLoan = Mockito.mock(Funding.class);
-        Mockito.when(mockFundingWithDifferentLoan.getId()).thenReturn("F2");
-        Mockito.when(mockFundingWithDifferentLoan.getLoanId()).thenReturn("LOAN-OTHER");
+    void shouldDeleteFunding() {
+        Funding funding = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
+        repository.save(funding);
 
-        repository.save(mockFundingWithDifferentLoan);
-        List<Funding> result = repository.findByLoanId("LOAN-XYZ");
+        repository.delete("F001");
+
+        assertFalse(repository.findById("F001").isPresent());
+    }
+
+    @Test
+    void shouldReturnEmptyWhenNoFundingMatchLoanId() {
+        Funding funding = new Funding("F001", "L001", "LN001",
+                new Money(new BigDecimal("5000000")));
+        repository.save(funding);
+
+        List<Funding> result = repository.findByLoanId("L999");
 
         assertTrue(result.isEmpty());
-    }
-
-    @Test
-    public void testDelete() {
-        InMemoryFundingRepository repository = new InMemoryFundingRepository();
-        Funding mockFunding = Mockito.mock(Funding.class);
-        Mockito.when(mockFunding.getId()).thenReturn("FUND-DEL");
-
-        repository.save(mockFunding);
-        repository.delete("FUND-DEL");
-        Optional<Funding> result = repository.findById("FUND-DEL");
-
-        assertFalse(result.isPresent());
     }
 }

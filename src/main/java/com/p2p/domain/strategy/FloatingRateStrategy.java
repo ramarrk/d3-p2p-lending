@@ -47,4 +47,4 @@ public class FloatingRateStrategy implements RepaymentCalculationStrategy {
 
         return jadwal;
     }
-}
+    }
