@@ -62,4 +62,9 @@ public class FundingSteps {
     public void theLoanStatusRemainsFunding() {
         assertInstanceOf(com.p2p.domain.state.FundingState.class, loan.getState());
     }
+
+    @Then("all observers are notified of funding completion")
+    public void allObserversAreNotifiedOfFundingCompletion() {
+        assertTrue(observerNotified, "Observer harus dipanggil saat funding penuh");
+    }
 }
