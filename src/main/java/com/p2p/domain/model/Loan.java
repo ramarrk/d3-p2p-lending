@@ -32,10 +32,10 @@ public class Loan {
     }
     public Borrower getBorrower() { return borrower; }
     public void setBorrower(Borrower borrower) { this.borrower = borrower; }
-//    public void setTargetAmount(Money targetAmount) { this.targetAmount = targetAmount; }
-//    private Money targetAmount;
-//    private Money totalFunded = new Money(BigDecimal.ZERO);
-//    private List<Funding> fundings = new ArrayList<>();
+    public void setTargetAmount(Money targetAmount) { this.targetAmount = targetAmount; }
+    private Money targetAmount;
+    private Money totalFunded = new Money(BigDecimal.ZERO);
+    private List<Funding> fundings = new ArrayList<>();
     private List<FundingObserver> observers = new ArrayList<>();
 
     // Delegasi method ke objek state
@@ -49,21 +49,21 @@ public class Loan {
     public void addObserver(FundingObserver observer) {
         observers.add(observer);
     }
-//    public void addFunding(Funding funding) {
-//        if (totalFunded.add(funding.getAmount()).isGreaterThan(targetAmount))
-//            throw new com.p2p.domain.exception.ExcessFundingException();
-//        fundings.add(funding);
-//        totalFunded = totalFunded.add(funding.getAmount());
-//        if (isFullyFunded()) notifyObservers();
-//    }
-//
-//    public boolean isFullyFunded() {
-//        return totalFunded.getAmount().compareTo(targetAmount.getAmount()) >= 0;
-//    }
+    public void addFunding(Funding funding) {
+        if (totalFunded.add(funding.getAmount()).isGreaterThan(targetAmount))
+            throw new com.p2p.domain.exception.ExcessFundingException();
+        fundings.add(funding);
+        totalFunded = totalFunded.add(funding.getAmount());
+        if (isFullyFunded()) notifyObservers();
+    }
 
-//    public Money getTotalFunded() { return totalFunded; }
-//    public Money getTargetAmount() { return targetAmount; }
-//    public List<Funding> getFundings() { return fundings; }
+    public boolean isFullyFunded() {
+        return totalFunded.getAmount().compareTo(targetAmount.getAmount()) >= 0;
+    }
+
+    public Money getTotalFunded() { return totalFunded; }
+    public Money getTargetAmount() { return targetAmount; }
+    public List<Funding> getFundings() { return fundings; }
 
     private void notifyObservers() {
         observers.forEach(o -> o.onFundingComplete(this));

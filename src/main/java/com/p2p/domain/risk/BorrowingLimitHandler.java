@@ -7,9 +7,9 @@ import com.p2p.domain.valueobject.Money;
 public class BorrowingLimitHandler extends RiskHandler {
     @Override
     public void handle(Borrower borrower, Money loanAmount) {
-//        if (loanAmount.isGreaterThan(borrower.getBorrowingLimit())) {
-//            throw new BorrowingLimitExceededException();
-//        }
+        if (loanAmount.isGreaterThan(borrower.getBorrowingLimit())) {
+            throw new BorrowingLimitExceededException();
+        }
         if (next != null) next.handle(borrower, loanAmount);
     }
 }

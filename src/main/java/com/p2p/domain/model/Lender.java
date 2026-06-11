@@ -15,13 +15,13 @@ public class Lender {
         this.balance = balance;
     }
 
-//    public void deductBalance(Money amount) {
-//        this.balance = this.balance.subtract(amount);
-//    }
-//
-//    public void refundBalance(Money amount) {
-//        this.balance = this.balance.add(amount);
-//    }
+    public void deductBalance(Money amount) {
+        this.balance = this.balance.subtract(amount);
+    }
+
+    public void refundBalance(Money amount) {
+        this.balance = this.balance.add(amount);
+    }
 
     public String getId() { return id; }
     public String getName() { return name; }

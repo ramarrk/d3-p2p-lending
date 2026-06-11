@@ -39,10 +39,10 @@ class ObserverTest {
         Funding funding = new Funding("F001", "L001", "LN001",
                 new Money(new BigDecimal("5000000")));
         when(loan.getId()).thenReturn("L001");
-//        when(loan.getFundings()).thenReturn(java.util.List.of(funding));
-//        LenderNotificationObserver observer = new LenderNotificationObserver();
-//
-//        observer.onFundingComplete(loan);
+        when(loan.getFundings()).thenReturn(java.util.List.of(funding));
+        LenderNotificationObserver observer = new LenderNotificationObserver();
+
+        observer.onFundingComplete(loan);
 
         String output = outputCaptor.toString();
         assertTrue(output.contains("LN001"), "Notifikasi harus menyebut lender ID: LN001");
