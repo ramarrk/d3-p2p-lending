@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RiskEngineTest {
+<<<<<<< Updated upstream
     @Test
     void testCreditScoreFail() {
         Borrower b = new Borrower("1", "User", "u@m.com", 500, new Money(new BigDecimal("1000000")));
@@ -16,6 +17,18 @@ class RiskEngineTest {
         assertThrows(InsufficientCreditScoreException.class, () -> 
             handler.handle(b, new Money(new BigDecimal("100000"))));
     }
+=======
+   @Test
+void shouldRejectLowCreditScore() {
+
+    Borrower borrower = new Borrower(
+            "1",
+            "Test",
+            "test@mail.com",
+            500,
+            new Money(new BigDecimal("1000000"))
+    );
+>>>>>>> Stashed changes
 
     @Test
     void testRiskChainSuccess() {
@@ -24,6 +37,17 @@ class RiskEngineTest {
         chain.setNext(new BorrowingLimitHandler());
         chain.setNext(new ActiveLoanHandler());
 
+<<<<<<< Updated upstream
         assertDoesNotThrow(() -> chain.handle(b, new Money(new BigDecimal("10000000"))));
     }
+=======
+    assertThrows(
+            InsufficientCreditScoreException.class,
+            () -> handler.handle(
+                    borrower,
+                    new Money(new BigDecimal("100000"))
+            )
+    );
+}
+>>>>>>> Stashed changes
 }
