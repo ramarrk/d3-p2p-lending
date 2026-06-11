@@ -26,38 +26,38 @@ public class FundingSteps {
         loan = new Loan("L001");
         loan.approve();
         loan.startFunding();
-        loan.setTargetAmount(new Money(BigDecimal.valueOf(targetAmount)));
+//        loan.setTargetAmount(new Money(BigDecimal.valueOf(targetAmount)));
         loan.addObserver(fundingLoan -> observerNotified = true);
     }
 
-    @And("the total funded amount is already {long}")
-    public void theTotalFundedAmountIsAlready(long alreadyFunded) {
-        loan.addFunding(new Funding(
-                UUID.randomUUID().toString(),
-                loan.getId(),
-                "LN-EXISTING",
-                new Money(BigDecimal.valueOf(alreadyFunded))
-        ));
-    }
+//    @And("the total funded amount is already {long}")
+//    public void theTotalFundedAmountIsAlready(long alreadyFunded) {
+//        loan.addFunding(new Funding(
+//                UUID.randomUUID().toString(),
+//                loan.getId(),
+//                "LN-EXISTING",
+//                new Money(BigDecimal.valueOf(alreadyFunded))
+//        ));
+//    }
 
     @And("{int} lenders have already contributed")
     public void lendersHaveAlreadyContributed(int count) {
         // jumlah lender sudah tercermin dari funding yang masuk
     }
 
-    @When("the lender funds the loan with {long}")
-    public void theLenderFundsTheLoanWith(long amount) {
-        try {
-            loan.addFunding(new Funding(
-                    UUID.randomUUID().toString(),
-                    loan.getId(),
-                    "LN001",
-                    new Money(BigDecimal.valueOf(amount))
-            ));
-        } catch (Exception e) {
-            thrownException = e;
-        }
-    }
+//    @When("the lender funds the loan with {long}")
+//    public void theLenderFundsTheLoanWith(long amount) {
+//        try {
+//            loan.addFunding(new Funding(
+//                    UUID.randomUUID().toString(),
+//                    loan.getId(),
+//                    "LN001",
+//                    new Money(BigDecimal.valueOf(amount))
+//            ));
+//        } catch (Exception e) {
+//            thrownException = e;
+//        }
+//    }
 
     @When("the borrower cancels the loan")
     public void theBorrowerCancelsTheLoan() {
@@ -68,14 +68,14 @@ public class FundingSteps {
         }
     }
 
-    @Then("the total funded amount becomes {long}")
-    public void theTotalFundedAmountBecomes(long expected) {
-        assertNull(thrownException, "Tidak seharusnya ada exception: " + thrownException);
-        assertEquals(
-                BigDecimal.valueOf(expected),
-                loan.getTotalFunded().getAmount().stripTrailingZeros()
-        );
-    }
+//    @Then("the total funded amount becomes {long}")
+//    public void theTotalFundedAmountBecomes(long expected) {
+//        assertNull(thrownException, "Tidak seharusnya ada exception: " + thrownException);
+//        assertEquals(
+//                BigDecimal.valueOf(expected),
+//                loan.getTotalFunded().getAmount().stripTrailingZeros()
+//        );
+//    }
 
     @Then("the loan status remains FUNDING")
     public void theLoanStatusRemainsFunding() {

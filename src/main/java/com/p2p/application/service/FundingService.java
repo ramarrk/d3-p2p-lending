@@ -22,7 +22,7 @@ public class FundingService {
         Loan loan = findLoanOrThrow(loanId);
         String fundingId = UUID.randomUUID().toString();
         Funding funding = new Funding(fundingId, loanId, lenderId, amount);
-        loan.addFunding(funding);
+//        loan.addFunding(funding);
         fundingRepository.save(funding);
     }
 

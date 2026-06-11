@@ -20,23 +20,23 @@ public class MurabahahStrategy implements RepaymentCalculationStrategy {
     @Override
     public List<Repayment> calculate(String loanId, Money principal, int tenorMonths) {
         // Rumus: (pokok + margin) / tenor
-        BigDecimal totalBayar = principal.getAmount().add(margin.getAmount());
-        BigDecimal cicilanPerBulan = totalBayar.divide(
-            BigDecimal.valueOf(tenorMonths), 2, RoundingMode.HALF_UP
-        );
+//        BigDecimal totalBayar = principal.getAmount().add(margin.getAmount());
+////        BigDecimal cicilanPerBulan = totalBayar.divide(
+//            BigDecimal.valueOf(tenorMonths), 2, RoundingMode.HALF_UP
+//        );
 
         List<Repayment> jadwal = new ArrayList<>();
         LocalDate dueDate = LocalDate.now();
 
-        for (int i = 1; i <= tenorMonths; i++) {
-            dueDate = dueDate.plusMonths(1);
-            jadwal.add(new Repayment(
-                UUID.randomUUID().toString(),
-                loanId,
-                dueDate,
-                new Money(cicilanPerBulan)
-            ));
-        }
+//        for (int i = 1; i <= tenorMonths; i++) {
+//            dueDate = dueDate.plusMonths(1);
+//            jadwal.add(new Repayment(
+//                UUID.randomUUID().toString(),
+//                loanId,
+//                dueDate,
+//                new Money(cicilanPerBulan)
+//            ));
+//        }
 
         return jadwal;
     }
