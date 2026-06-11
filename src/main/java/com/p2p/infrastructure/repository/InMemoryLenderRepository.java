@@ -27,5 +27,7 @@ public class InMemoryLenderRepository implements LenderRepository {
     }
 
     @Override
-    public void delete(String id) {}
+    public void delete(String id) {
+        database.remove(id);
+    }
 }
