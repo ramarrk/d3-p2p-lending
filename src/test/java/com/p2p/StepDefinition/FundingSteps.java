@@ -34,4 +34,18 @@ public class FundingSteps {
                 new Money(BigDecimal.valueOf(alreadyFunded))
         ));
     }
+
+    @When("the lender funds the loan with {long}")
+    public void theLenderFundsTheLoanWith(long amount) {
+        try {
+            loan.addFunding(new Funding(
+                    UUID.randomUUID().toString(),
+                    loan.getId(),
+                    "LN001",
+                    new Money(BigDecimal.valueOf(amount))
+            ));
+        } catch (Exception e) {
+            thrownException = e;
+        }
+    }
 }
