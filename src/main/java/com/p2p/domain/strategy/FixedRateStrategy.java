@@ -7,6 +7,7 @@ import com.p2p.domain.valueobject.Money;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +21,6 @@ public class FixedRateStrategy implements RepaymentCalculationStrategy {
 
     @Override
     public List<Repayment> calculate(String loanId, Money principal, int tenorMonths) {
-        // Rumus: (pokok + pokok × rate × tenor/12) / tenor
         BigDecimal pokok = principal.getAmount();
         BigDecimal rate = annualRate.getValue();
         BigDecimal tenor = BigDecimal.valueOf(tenorMonths);
@@ -31,7 +31,7 @@ public class FixedRateStrategy implements RepaymentCalculationStrategy {
         BigDecimal cicilanPerBulan = totalBayar.divide(tenor, 2, RoundingMode.HALF_UP);
 
         List<Repayment> jadwal = new ArrayList<>();
-        LocalDate dueDate = LocalDate.now();
+        LocalDate dueDate = LocalDate.now(ZoneId.systemDefault());
 
         for (int i = 1; i <= tenorMonths; i++) {
             dueDate = dueDate.plusMonths(1);
